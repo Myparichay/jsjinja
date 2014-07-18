@@ -1153,6 +1153,7 @@ class CodeGenerator(NodeVisitor):
             loop_vars = [n.name for n in node.target.find_all(nodes.Name)]
 
         # self.writeline(str(loop_vars))
+        
         loop_frame.identifiers.declared.add(*loop_vars)   
         # self.visit(node.target, loop_frame)
         
@@ -1174,7 +1175,8 @@ class CodeGenerator(NodeVisitor):
             self.write(';')
             var_i = self.temporary_identifier()
             var_len = self.temporary_identifier()
-            self.writeline('for (var %(i)s= 0, %(len)s = %(ref)s.length; %(i)s<%(len)s; %(i)s++) '%dict(i=var_i,len=var_len, ref=var_ref), node)
+            #temp fix for key value pair of json
+            self.writeline('for (var %(i)s= 0, %(len)s = %(ref)s.length?%(ref)s.length:Object.keys(%(ref)s).length; %(i)s<%(len)s; %(i)s++) '%dict(i=var_i,len=var_len, ref=var_ref), node)
 
             #self.write(extended_loop and ')) {' or ') {')
 
@@ -1191,7 +1193,8 @@ class CodeGenerator(NodeVisitor):
         if len(loop_vars)>1:
             self.writeline('%s;'%', '.join(['l_%s = %s[%d]'%(l,var_ref,i) for i,l in enumerate(loop_vars)]))
         else:
-            self.writeline('l_%s = %s[%s];'%(loop_vars[0],var_ref,var_i))
+            #temp fix for key value pair of json
+            self.writeline('l_%(name)s = %(val1)s[%(val2)s]||Object.keys(%(val1)s)[%(val2)s]'%dict(name=loop_vars[0],val1=var_ref,val2=var_i))
         
         if extended_loop:
             self.writeline('l_loop = Jinja2.utils.loop(%s,%s);'%(var_i,var_len))
