@@ -422,6 +422,10 @@ __extends = function(child, parent) { for (var key in parent) { if (__hasProp.ca
     return str.toLowerCase();
   });
 
+  Jinja2.registerFilter('int', function(num) {
+    return parseInt(num);
+  });
+
   Jinja2.registerFilter('upper', function(str) {
     return str.toUpperCase();
   });
