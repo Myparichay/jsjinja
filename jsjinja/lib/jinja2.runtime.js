@@ -164,7 +164,7 @@ __extends = function(child, parent) { for (var key in parent) { if (__hasProp.ca
         call_args.push(kwargs);
       }
       for (arg in f.__args__) {
-        call_args.push(kwargs[(_ref = f.__args__) != null ? _ref[arg] : void 0] || args.pop());
+        call_args.push(kwargs[(_ref = f.__args__) != null ? _ref[arg] : void 0] || args.shift());
       }
       return f.apply(f.constructor || null, call_args);
     };

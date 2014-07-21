@@ -1176,7 +1176,7 @@ class CodeGenerator(NodeVisitor):
             var_i = self.temporary_identifier()
             var_len = self.temporary_identifier()
             #temp fix for key value pair of json
-            self.writeline('for (var %(i)s= 0, %(len)s = %(ref)s.length?%(ref)s.length:Object.keys(%(ref)s).length; %(i)s<%(len)s; %(i)s++) '%dict(i=var_i,len=var_len, ref=var_ref), node)
+            self.writeline('for (var %(i)s= 0, %(len)s = %(ref)s.length||Object.keys(%(ref)s).length; %(i)s<%(len)s; %(i)s++) '%dict(i=var_i,len=var_len, ref=var_ref), node)
 
             #self.write(extended_loop and ')) {' or ') {')
 
