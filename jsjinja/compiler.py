@@ -1194,7 +1194,7 @@ class CodeGenerator(NodeVisitor):
             self.writeline('%s;'%', '.join(['l_%s = %s[%d]'%(l,var_ref,i) for i,l in enumerate(loop_vars)]))
         else:
             #temp fix for key value pair of json
-            self.writeline('l_%(name)s = %(val1)s[%(val2)s]||Object.keys(%(val1)s)[%(val2)s]'%dict(name=loop_vars[0],val1=var_ref,val2=var_i))
+            self.writeline('l_%(name)s = %(val1)s.length?%(val1)s[%(val2)s]:Object.keys(%(val1)s)[%(val2)s]'%dict(name=loop_vars[0],val1=var_ref,val2=var_i))
         
         if extended_loop:
             self.writeline('l_loop = Jinja2.utils.loop(%s,%s);'%(var_i,var_len))
