@@ -617,7 +617,7 @@ class CodeGenerator(NodeVisitor):
             for name in getattr(visitor, dependency):
                 if name not in mapping:
                     mapping[name] = self.temporary_identifier()
-                self.writeline('%s = Jinja2.%s[%r]' %
+                self.writeline('var %s = Jinja2.%s[%r]' %
                                (mapping[name], dependency, JSVar(name)))
 
     def unoptimize_scope(self, frame):
